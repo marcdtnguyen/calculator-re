@@ -67,13 +67,12 @@ function getLastValue(){
     return expArray[expArray.length-1]
 }
 
-// addition function (a, b) => a + b;
-// subtraction function (a, b) => a - b;
-// multiplication function (a, b) => a * b;
-// division function (a, b) => a / b;
+const add = (a, b) => Number(a) + Number(b);
+const subtract = (a, b) => a - b;
+const multiply = (a, b) => a * b;
+const divide = (a, b) => a / b;
 
 function onEqual(){
-    console.log('=')
     processExp();
     const value = calculate();
     show(result, value)
@@ -82,10 +81,11 @@ function onEqual(){
 }
 
 function processExp(){
-    const last = getLastValue()
+    let last = getLastValue();
 
     while(operations.includes(last)){
         expArray.pop();
+        last = getLastValue();
     }
 
     let index = expArray.findIndex((e, i)=>operations.includes(e) && operations.includes(expArray[i-1]))
@@ -96,10 +96,24 @@ function processExp(){
     }
 }
 
+function operate(index, operation){
+    expArray.splice(index - 1, 3, operation(expArray[index - 1], expArray[index + 1]))
+}
+
 function calculate(){
+    while(expArray.includes('*') || expArray.includes('/')){
+        const index = expArray.findIndex((e)=> e == '*' || e == '/')
+        expArray[index] == '*' ? 
+        operate(index, multiply) : 
+        operate(index, divide)
+    }
+
+    while(expArray.includes('+') || expArray.includes('-')){
+        const index = expArray.findIndex((e)=> e == '+' || e == '-')
+        expArray[index] == '+' ? 
+        operate(index, add) : 
+        operate(index, subtract)
+    }
+
     return expArray.join(' ')
-    // proExp.reduce()
-    // * / 
-    // + -
-    // return value;
 }

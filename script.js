@@ -1,67 +1,69 @@
-/*
-const expression = [0];
-const operations = ['+', '-', '*', '/']
+// const expression = [0];
+// const operations = ['+', '-', '*', '/']
 
-keyboard.addEventLister(keypress, onKey)
+const btns = document.querySelector('.buttons')
+btns.addEventListener('click', (e) => { 
+    if (e.target != btns) onKey(e.target.innerText) 
+})
 
-window.addEventListener(click, onKey)
+document.addEventListener('keypress', (e) => {
+if (e.key.match(/[\d=*/+-]/)) onKey(e.key)
+})
 
-onkey = (e) => {
-    key = processkey(e.target);
-    playanimation(key)
+function onKey(key){
+    // playanimation(key)
     switch(key){
-        case number: addNumber();
+        // case : addNumber();
+        // break;
+        // case op: addOperator();
+        // break;
+        case '=': onEqual();
         break;
-        case op: addOperator();
-        break;
-        case equal: onEqual();
+        default: key.match(/[\d]/) ? addNumber(key) : addOperator(key)
     }
 }
 
-processkey = (target) => {
-    return key string value;
+// playanimation = (key) => {
+//     playAnimation
+// }
+
+function addNumber(num){
+    console.log(num);
+//     last = getLastValue()
+//     if(last = 0){
+//         expression.replace(last, num)
+//     } else if (last = number){
+//         expression.replace(last, last+num)
+//     } else {
+//         expression.push(num)
+//     }
 }
 
-playanimation = (key) => {
-    playAnimation
+function addOperator(op){
+    console.log(op)
+//     last = getLastValue()
+//     if(last = op){
+//         expression.replace(last, op)
+//     } else{
+//         expression.push(op)
+//     }
 }
 
-addNumber = (num) => {
-    last = getLastValue()
-    if(last = 0){
-        expression.replace(last, num)
-    } else if (last = number){
-        expression.replace(last, last+num)
-    } else {
-        expression.push(num)
-    }
+// addition function (a, b) => a + b;
+// subtraction function (a, b) => a - b;
+// multiplication function (a, b) => a * b;
+// division function (a, b) => a / b;
+
+function onEqual(){
+    console.log('=')
+//     getExpression
+//     value = calculate processed expression
+//     display(value)
 }
 
-addOperator = (op) => {
-    last = getLastValue()
-    if(last = op){
-        expression.replace(last, op)
-    } else{
-        expression.push(op)
-    }
-}
-
-addition function (a, b) => a + b;
-subtraction function (a, b) => a - b;
-multiplication function (a, b) => a * b;
-division function (a, b) => a / b;
-
-onEqual = () => {
-    getExpression
-    value = calculate processed expression
-    display(value)
-}
-
-calculate = (proExp) {
-    proExp.reduce()
-    * / 
-    + -
-    return value;
-}
-
-*/
+// calculate = (proExp) {
+//     proExp.reduce()
+//     * / 
+//     + -
+//     return value;
+// }

@@ -37,14 +37,14 @@ function show(display, value){
 
 function addNumber(num){
     console.log(num);
-//     last = getLastValue()
-//     if(last = 0){
-//         expression.replace(last, num)
-//     } else if (last = number){
-//         expression.replace(last, last+num)
-//     } else {
-//         expression.push(num)
-//     }
+    const last = getLastValue()
+    if(last == 0){
+        expArray.splice(-1, 1, num);
+    } else if (Number(last)){
+        expArray.splice(-1, 1, last+num)
+    } else {
+        expArray.push(num)
+    }
 }
 
 function addOperator(op){
@@ -55,6 +55,10 @@ function addOperator(op){
 //     } else{
 //         expression.push(op)
 //     }
+}
+
+function getLastValue(){
+    return expArray[expArray.length-1]
 }
 
 // addition function (a, b) => a + b;

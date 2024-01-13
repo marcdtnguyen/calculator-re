@@ -1,4 +1,7 @@
-// const expression = [0];
+const exp = document.querySelector('.expression');
+const expArray = [0];
+const value = document.querySelector('.value');
+
 // const operations = ['+', '-', '*', '/']
 
 const btns = document.querySelector('.buttons')
@@ -21,11 +24,16 @@ function onKey(key){
         break;
         default: key.match(/[\d]/) ? addNumber(key) : addOperator(key)
     }
+    show(exp, expArray.join(' '))
 }
 
 // playanimation = (key) => {
 //     playAnimation
 // }
+
+function show(display, value){
+    display.innerText = value;
+}
 
 function addNumber(num){
     console.log(num);

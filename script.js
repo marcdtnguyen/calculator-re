@@ -1,12 +1,12 @@
 const exp = document.querySelector('.expression');
-const expArray = [0];
-const value = document.querySelector('.value');
+let expArray = [0];
+const result = document.querySelector('.result');
 
 const operations = ['+', '-', '*', '/']
 
 const btns = document.querySelector('.buttons')
 btns.addEventListener('click', (e) => { 
-    if (e.target != btns) onKey(e.target.innerText) 
+    if (e.target != btns) onKey(e.target.textContent) 
 })
 
 document.addEventListener('keypress', (e) => {
@@ -32,11 +32,10 @@ function onKey(key){
 // }
 
 function show(display, value){
-    display.innerText = value;
+    display.textContent = value;
 }
 
 function addNumber(num){
-    console.log(num);
     const last = getLastValue()
     if(last == 0){
         expArray.splice(-1, 1, num);
@@ -48,7 +47,6 @@ function addNumber(num){
 }
 
 function addOperator(op){
-    console.log(op)
     const last = getLastValue()
     const bLast = expArray[expArray.length-2];
 
@@ -76,14 +74,32 @@ function getLastValue(){
 
 function onEqual(){
     console.log('=')
-//     getExpression
-//     value = calculate processed expression
-//     display(value)
+    processExp();
+    const value = calculate();
+    show(result, value)
+    expArray = [0];
+    show(exp, 0);
 }
 
-// calculate = (proExp) {
-//     proExp.reduce()
-//     * / 
-//     + -
-//     return value;
-// }
+function processExp(){
+    const last = getLastValue()
+
+    while(operations.includes(last)){
+        expArray.pop();
+    }
+
+    let index = expArray.findIndex((e, i)=>operations.includes(e) && operations.includes(expArray[i-1]))
+
+    while(index != -1){
+        expArray.splice(index, 2, '-' + expArray[index + 1])
+        index = expArray.findIndex((e, i)=>operations.includes(e) && operations.includes(expArray[i-1]))
+    }
+}
+
+function calculate(){
+    return expArray.join(' ')
+    // proExp.reduce()
+    // * / 
+    // + -
+    // return value;
+}

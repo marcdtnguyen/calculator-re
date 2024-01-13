@@ -2,7 +2,7 @@ const exp = document.querySelector('.expression');
 const expArray = [0];
 const value = document.querySelector('.value');
 
-// const operations = ['+', '-', '*', '/']
+const operations = ['+', '-', '*', '/']
 
 const btns = document.querySelector('.buttons')
 btns.addEventListener('click', (e) => { 
@@ -49,12 +49,20 @@ function addNumber(num){
 
 function addOperator(op){
     console.log(op)
-//     last = getLastValue()
-//     if(last = op){
-//         expression.replace(last, op)
-//     } else{
-//         expression.push(op)
-//     }
+    const last = getLastValue()
+    const bLast = expArray[expArray.length-2];
+
+    if(op != '-' && last == '-' && operations.includes(bLast)){
+        expArray.splice(-2, 2,op)
+    }
+    if((last == '*' || last == '/') && op == '-'){
+        expArray.push(op);
+    } 
+    if(operations.includes(last)){
+        expArray.splice(-1, 1, op)
+    } else{
+        expArray.push(op)
+    }
 }
 
 function getLastValue(){

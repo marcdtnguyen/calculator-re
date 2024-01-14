@@ -1,5 +1,6 @@
 const exp = document.querySelector('.expression');
-let expArray = [0];
+let expArray = ["0"];
+exp.textContent = expArray[0];
 const result = document.querySelector('.result');
 
 const operations = ['+', '-', '*', '/']
@@ -9,18 +10,20 @@ btns.addEventListener('click', (e) => {
     if (e.target != btns) onKey(e.target.textContent) 
 })
 
-document.addEventListener('keypress', (e) => {
-if (e.key.match(/[\d=*/+-]/)) onKey(e.key)
+document.addEventListener('keydown', (e) => {
+    console.log(e)
+if (e.key.match(/[\d=*/+-]/) || e.key == 'Enter' || e.key == 'Backspace' || e.key == 'Delete') onKey(e.key)
 })
 
 function onKey(key){
+    console.log(key)
     // playanimation(key)
     switch(key){
-        // case : addNumber();
-        // break;
-        // case op: addOperator();
-        // break;
+        case 'Enter':
         case '=': onEqual();
+        break;
+        case 'Backspace':
+        case 'Delete': removeKey();
         break;
         default: key.match(/[\d]/) ? addNumber(key) : addOperator(key)
     }
@@ -76,8 +79,14 @@ function onEqual(){
     processExp();
     const value = calculate();
     show(result, value)
-    expArray = [0];
-    show(exp, 0);
+    expArray = ["0"];
+    show(exp, expArray[0]);
+}
+
+function removeKey(){
+    const last = getLastValue();
+    if(last == undefined) return;
+    last.length == 1 ? expArray.pop() : expArray.splice(-1, 1, last.slice(0, -1))
 }
 
 function processExp(){

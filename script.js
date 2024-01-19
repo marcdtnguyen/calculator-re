@@ -11,12 +11,10 @@ btns.addEventListener('click', (e) => {
 })
 
 document.addEventListener('keydown', (e) => {
-    console.log(e)
-if (e.key.match(/[\d=*/+-]/) || e.key == 'Enter' || e.key == 'Backspace' || e.key == 'Delete') onKey(e.key)
+if (e.key.match(/[\d=.*/+-]/) || e.key == 'Enter' || e.key == 'Backspace' || e.key == 'Delete') onKey(e.key)
 })
 
 function onKey(key){
-    console.log(key)
     // playanimation(key)
     switch(key){
         case 'Enter':
@@ -24,6 +22,8 @@ function onKey(key){
         break;
         case 'Backspace':
         case 'Delete': removeKey();
+        break;
+        case '.': addDec(key);
         break;
         default: key.match(/[\d]/) ? addNumber(key) : addOperator(key)
     }
@@ -63,6 +63,16 @@ function addOperator(op){
         expArray.splice(-1, 1, op)
     } else{
         expArray.push(op)
+    }
+}
+
+function addDec(key){
+    const last = getLastValue()
+    if(isNaN(last)){
+        expArray.push(key)
+    }
+    else if(!last.includes(key) && !operations.includes(last)){
+        expArray.splice(-1, 1, last+key)
     }
 }
 
